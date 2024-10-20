@@ -15,7 +15,7 @@ class Product {
     @Column()
     description: string;
 
-    @Column()
+    @Column({ nullable: true })
     sku: string;
 
     @Column()
@@ -26,6 +26,9 @@ class Product {
 
     @Column("jsonb", { nullable: true })
     images: Array<{ url: string, alt: string }>;
+
+    @Column({ name: "userId", nullable: false })
+    userId: number;
 
     @ManyToOne(() => User, (user: User) => user.products)
     user: User;
