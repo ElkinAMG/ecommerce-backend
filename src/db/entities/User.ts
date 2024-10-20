@@ -9,6 +9,9 @@ class User {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column({ nullable: true })
+    uId: string;
+
     @Column()
     firstName: string;
 

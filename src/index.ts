@@ -4,7 +4,7 @@ import cors from "cors";
 require('dotenv').config()
 
 // Middlewares
-import { connectToDatabase } from './middlewares/database';
+import { connectToDatabase, errorHandling } from './middlewares/database';
 
 // Routes
 import productsRouter from './apps/products/controller';
@@ -22,10 +22,13 @@ app.use(cors(corsOptions))
 
 // Add database to endpoints - middleware
 app.use(connectToDatabase);
+// Add error handling - middleware
+// app.use(errorHandling);
 
 // Parse JSON requests
 app.use(express.json());
 
+// Routes
 app.use("/products", productsRouter);
 app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
