@@ -7,7 +7,7 @@
    "scripts": {
       "dev": "ts-node src/index.ts",
       "typeorm": "typeorm-ts-node-commonjs -d ./src/db/data-source.ts",
-      "start": "node ./build/index.js"
+      "start": "rm -rf build && tsc && node ./build/index.js"
    },
    "dependencies": {
       "@supabase/supabase-js": "^2.45.6",
