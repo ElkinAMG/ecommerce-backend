@@ -1,30 +1,27 @@
 import express from 'express';
 
 // Types
-import { RequestWithDb } from '../../middlewares/database';
+import { RequestWithDb, requireAuth } from '../../middlewares/database';
 
 // Entities
 import { User } from '../../db/entities';
+import UsersService from './service';
 
 const usersRouter = express();
 
-usersRouter.get('/', async (req: RequestWithDb, res) => {
-    res.json({}).status(200);
+usersRouter.get('/:uId', requireAuth, async (req: RequestWithDb, res) => {
+    const userService = new UsersService(
+        req.dbConnection.getRepository(User)
+    );
+    try {
+        const user = await userService.read(req.params.uId);
+        res.json(user).status(200);
+    } catch (err) {
+        console.error(err);
+        res.json({
+            detail: err.message
+        }).status(400);
+    }
 });
-
-usersRouter.post('/', async (req, res) => {
-    const product = new User();
-    res.json(product);
-});
-
-usersRouter.put('/:id',
-    async (req, res) => {
-        res.json();
-    });
-
-usersRouter.delete('/:id',
-    async (req, res) => {
-        res.sendStatus(204);
-    });
 
 export default usersRouter;
