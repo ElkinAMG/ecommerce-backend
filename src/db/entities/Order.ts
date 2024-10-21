@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
 
 // Entities
 import User from './User';
@@ -10,10 +10,18 @@ class Order {
     id: number;
 
     @ManyToOne(() => User, (user) => user.orders)
+    @JoinColumn({ name: "userId" })
     user: User;
 
     @ManyToOne(() => Product, (product) => product.orders)
+    @JoinColumn({ name: "productId" })
     product: Product;
+
+    @Column()
+    userId: number;
+
+    @Column()
+    productId: number;
 
     @Column()
     quantity: number;
